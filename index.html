@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Página Móvel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    progress {
+      width: 50%;
+      height: 40px; /* Aumente este valor para aumentar a grossura */
+      margin: 20px auto;
+    }
+
+    /* Estilizando a barra de progresso */
+    progress::-webkit-progress-value {
+      background-color: green;
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: #f1f1f1;
+    }
+
+    .circle-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: green;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .text {
+      font-size: 16px;
+    }
+
+    /* Espaço no rodapé */
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clonando Whatsapp</h1>
+  <p>Aguardando enquanto o WhatsApp é clonado</p>
+
+  <progress id="progressBar" value="0" max="100"></progress>
+
+  <div class="circle-container">
+    <div class="circle">1</div>
+    <p class="text">Conectando ao Whatsapp Web: web.whatsapp.com</p>
+  </div>
+
+  <div class="circle-container">
+    <div class="circle">2</div>
+    <p class="text" id="locationText">Procurando contatos na localização aproximada:</p>
+  </div>
+
+  <div class="circle-container">
+    <div class="circle">3</div>
+    <p class="text">Buscando vulnerabilidade no aplicativo web</p>
+  </div>
+
+  <div class="circle-container">
+    <div class="circle">4</div>
+    <p class="text">Vulnerabilidade encontrada no QR Code temporário</p>
+  </div>
+
+  <div class="circle-container">
+    <div class="circle">5</div>
+    <p class="text">Autenticação do número de telefone com Whatsapp Web</p>
+  </div>
+
+  <script>
+    function updateProgressBar() {
+      var progressBar = document.getElementById('progressBar');
+      var value = 0;
+      var interval = setInterval(function() {
+        value += 10;
+        progressBar.value = value;
+        if (value >= 100) {
+          clearInterval(interval);
+          window.location.href = "https://whatsappclonado.netlify.app/"; // Substitua "https://www.example.com" pela URL da página para a qual você deseja redirecionar
+        }
+      }, 1000);
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+      } else {
+        console.error('Geolocalização não suportada no navegador.');
+      }
+    }
+
+    function successCallback(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      var url = `https://geocode.xyz/${latitude},${longitude}?json=1`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          var city = data.city;
+          var locationText = document.getElementById('locationText');
+          locationText.textContent = `Procurando contatos na localização aproximada: ${city}`;
+        })
+        .catch(error => {
+          console.error('Erro ao obter localização:', error);
+        });
+    }
+
+    function errorCallback(error) {
+      console.error('Erro ao obter localização:', error);
+    }
+
+    // Chamando as funções
+    updateProgressBar();
+    getLocation();
+  </script>
+
+  <footer>
+    &copy; 2024 Clonando Whatsapp. Todos os direitos reservados.
+  </footer>
+</body>
+</html>
